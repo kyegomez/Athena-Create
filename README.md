@@ -21,4 +21,4 @@ Create Images, Videos, Music effortlessly in Natural Language
 
 * Ocean Vector-Database to store and query multi-modal documents
 
-* 
+* Gallery/Marketplace see what people have created, like share, and buy and sell
