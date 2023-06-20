@@ -15,6 +15,8 @@ Create Images, Videos, Music effortlessly in Natural Language
 
 ## Feature Ideas:
 
+* File upload, images, pdfs, etc rounded square box
+
 * Share with friends feature
 
 * Ask Follow up
@@ -26,3 +28,5 @@ Create Images, Videos, Music effortlessly in Natural Language
 * [Backend] Store all user generated data on the backend.
 
 * Auto-Complete from recent Creations.
+
+* 
