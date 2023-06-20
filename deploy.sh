@@ -8,11 +8,11 @@ npm run build
 
 cd ..
 
-mkdir -p $HOME/.gerev/.buildx-cache
+mkdir -p $HOME/.athena/.buildx-cache
 
 sudo docker buildx create --use
 sudo docker buildx build --platform linux/amd64,linux/arm64 \
-  --cache-from type=local,src=$HOME/.gerev/.buildx-cache \
-  --cache-to type=local,dest=$HOME/.gerev/.buildx-cache \
-  -t gerev/gerev:$VERSION . \
-  -t gerev/gerev:latest --push
+  --cache-from type=local,src=$HOME/.athena/.buildx-cache \
+  --cache-to type=local,dest=$HOME/.athena/.buildx-cache \
+  -t athena/athena:$VERSION . \
+  -t athena/athena:latest --push
