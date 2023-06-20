@@ -31,4 +31,5 @@ Create Images, Videos, Music effortlessly in Natural Language
 
 * 5 Free creations a day, upgrade to 20$ plan for more! 
 
-* 
+* Confetti Animation to reward users for creating
+
