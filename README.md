@@ -29,4 +29,6 @@ Create Images, Videos, Music effortlessly in Natural Language
 
 * Auto-Complete from recent Creations.
 
+* 5 Free creations a day, upgrade to 20$ plan for more! 
+
 * 
