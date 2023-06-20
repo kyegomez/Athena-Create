@@ -19,6 +19,10 @@ Create Images, Videos, Music effortlessly in Natural Language
 
 * Ask Follow up
 
-* Ocean Vector-Database to store and query multi-modal documents
+* Ocean Vector-Database to store, embed, and query multi-modal documents
 
-* Gallery/Marketplace see what people have created, like share, and buy and sell
+* Gallery/Marketplace, For You page to see what people have created, like share, and buy and sell
+
+* [Backend] Store all user generated data on the backend.
+
+* Auto-Complete from recent Creations.
