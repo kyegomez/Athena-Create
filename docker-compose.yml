@@ -1,0 +1,15 @@
+services:
+  athenaCreate:
+    image: athenaCreate:latest
+    ports:
+      - 80:80
+    volumes:
+      - ~/.athenaCreate/storage:/opt/storage
+    build: .
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
