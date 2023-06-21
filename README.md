@@ -39,7 +39,7 @@ cd ..
 python models_server.py --config configs/config.default.yaml # required when `inference_mode` is `local` or `hybrid`
 python awesome_chat.py --config configs/config.default.yaml --mode server # for text-davinci-003
 ```
-3. Prepare frontend: `cd frontend` then Install dependencies with `npm install` then start dev server: `npm run dev
+3. Prepare frontend: `cd frontend` then Install dependencies with `npm install` then start dev server: `npm run dev`
 
 ## How to Contribute
 
