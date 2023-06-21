@@ -1,6 +1,6 @@
 # Agora
 
-Agora is a collective of creators, [join us!](https://discord.gg/qUtxnK2NMf)
+Agora is a collective of creators, [join us and help create Athena Create and or receive support!](https://discord.gg/qUtxnK2NMf)
 
 # Athena Create - The Everything App
 **Welcome to Athena Create, the epicenter of creation and collaboration.** 
