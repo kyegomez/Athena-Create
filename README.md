@@ -21,8 +21,25 @@ Athena Create empowers you to bring your ideas to life using state-of-the-art AI
 ## Getting Started
 
 1. Fork and clone the Athena Create repository.
-2. Install dependencies with `npm install`.
-3. Start the development server with `npm start`.
+2. Start the backend: 
+```bash
+# setup env
+cd server
+conda create -n athena python=3.8
+conda activate athena
+conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
+pip install -r requirements.txt
+
+# download models. Make sure that `git-lfs` is installed.
+cd models
+bash download.sh # required when `inference_mode` is `local` or `hybrid`. 
+
+# run server
+cd ..
+python models_server.py --config configs/config.default.yaml # required when `inference_mode` is `local` or `hybrid`
+python awesome_chat.py --config configs/config.default.yaml --mode server # for text-davinci-003
+```
+3. Prepare frontend: `cd frontend` then Install dependencies with `npm install` then start dev server: `npm run dev
 
 ## How to Contribute
 
