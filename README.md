@@ -1,10 +1,9 @@
 # Athena Create - The Everything App
+**Welcome to Athena Create, the epicenter of creation and collaboration.** 
 
 ![Athena Create Logo](AthenaCreate.png)
 
 *Art, science, and the future converge here. This is Athena Create.*
-
-**Welcome to Athena Create, the epicenter of creation and collaboration.** 
 
 ## Overview
 
