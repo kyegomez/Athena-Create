@@ -19,7 +19,9 @@ Athena Create empowers you to bring your ideas to life using state-of-the-art AI
 **Inspire**: Take part in community challenges, earn badges, and get recognized for your work. Your creations might just be the spark that ignites another's imagination.
 
 ## Getting Started
+There are 2 methods, 1 local no docker, and docker:
 
+### Method 1
 1. Fork and clone the Athena Create repository.
 2. Start the backend: 
 ```bash
@@ -40,6 +42,9 @@ python models_server.py --config configs/config.default.yaml # required when `in
 python awesome_chat.py --config configs/config.default.yaml --mode server # for text-davinci-003
 ```
 3. Prepare frontend: `cd frontend` then Install dependencies with `npm install` then start dev server: `npm run dev`
+
+# Method2
+Docker, not done yet
 
 ## How to Contribute
 
