@@ -1,6 +1,6 @@
 # Athena Create - The Everything App
 
-![Athena Create Logo](Athena_Create.png)
+![Athena Create Logo](AthenaCreate.png)
 
 *Art, science, and the future converge here. This is Athena Create.*
 
