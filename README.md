@@ -4,9 +4,7 @@
 
 *Art, science, and the future converge here. This is Athena Create.*
 
-**Welcome to Athena Create, the open-source epicenter of creation and collaboration.** 
-
-Move the Earth with a thought with Athena Create.
+**Welcome to Athena Create, the epicenter of creation and collaboration.** 
 
 ## Overview
 
@@ -97,7 +95,7 @@ Athena Create is not just an app — it's a vision for a future where anyone can
 
 * Create new marketplace for AI Models and services, new Huggingface, Allow developers to offer custom AI models which other users can pay to access and we take a fee or we pay the developers based on usage out of the base subscription.  similar to the App Store's model.
 
-* Become new TikTok
+* Become new TikTok for Creators
 
 * Implement Monolith' byte dance algorithm with multi-modality
 
