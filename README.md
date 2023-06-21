@@ -42,7 +42,8 @@ Unleash the power of social media and let your creations reach every corner of t
 
 ## License
 
-Athena Create is open-source and is licensed under the [MIT License](https://github.com/kyegomez/Athena-Create/blob/main/LICENSE).
+Athena Create is open-source and is licensed under the [CC0 1.0 Universal
+ License](https://github.com/kyegomez/Athena-Create/blob/main/LICENSE).
 
 ## Final Thoughts
 
