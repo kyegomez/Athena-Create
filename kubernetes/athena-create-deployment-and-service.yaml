@@ -17,7 +17,12 @@ spec:
           image: athenaCreate:latest
           resources:
             limits:
+              cpu: "1"
+              memory: "1Gi"
               nvidia.com/gpu: 1
+            requests:
+              cpu: "0.5"
+              memory: "500Mi"
           ports:
             - containerPort: 80
           volumeMounts:
