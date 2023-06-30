@@ -350,3 +350,53 @@ resource "kubernetes_deployment" "athena_create" {
 12. **Apply Changes:** Finally, use the `terraform apply` command to create your EKS cluster and deploy your app. Monitor the output and resolve any errors if they come up.
 
 This plan provides a general guide but every production environment will have its own requirements, so make sure to adapt this plan as needed.
+
+
+
+# Terraform Deployment
+
+Once you have your Terraform scripts ready (`main.tf` and `k8s_deployment.tf`), you can run the following commands to use them:
+
+**Initialize Terraform**
+
+The first command to run in the directory where your Terraform files are located is:
+
+```bash
+terraform init
+```
+
+This will download the necessary providers (AWS and Kubernetes in this case) for Terraform.
+
+**Create an Execution Plan**
+
+To see what changes Terraform will apply, you can create an execution plan:
+
+```bash
+terraform plan
+```
+
+**Apply Changes**
+
+If the plan looks correct, you can apply it:
+
+```bash
+terraform apply
+```
+
+Terraform will again show you the planned changes and ask for confirmation before applying them.
+
+**Destroy Resources**
+
+If you want to remove all resources managed by Terraform, you can use the destroy command:
+
+```bash
+terraform destroy
+```
+
+Again, Terraform will show you what will be destroyed and ask for confirmation.
+
+**Note:** 
+
+- Before you can run these commands, you need to have Terraform installed on your machine.
+- Also, make sure that your AWS credentials are set up correctly. You can use environment variables, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, or configure them in the AWS credentials file.
+- Remember that `terraform apply` and `terraform destroy` can make significant changes to your infrastructure. Always review the plan before confirming any changes.
