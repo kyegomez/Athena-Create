@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: athena-create-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: athena-create
+  template:
+    metadata:
+      labels:
+        app: athena-create
+    spec:
+      containers:
+        - name: athena-create-container
+          image: athenaCreate:latest
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: storage-volume
+              mountPath: /opt/storage
+      volumes:
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: athena-create-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: athena-create-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: athena-create

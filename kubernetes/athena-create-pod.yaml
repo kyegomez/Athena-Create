@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: athena-create-pod
+  labels:
+    app: athena-create
+spec:
+  containers:
+    - name: athena-create-container
+      image: athenaCreate:latest
+      env:
+        - name: DOCKER_DEPLOYMENT
+          value: "1"
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: storage-volume
+          mountPath: /opt/storage
+  volumes:
+    - name: storage-volume
+      emptyDir: {}
