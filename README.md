@@ -87,3 +87,63 @@ Athena Create is not just an app — it's a vision for a future where anyone can
 *Turn the ethos of creation into the echo of the cosmos. This is Athena Create.*
 
 
+
+
+
+# Kubernetes Documentation
+
+Here is a brief guide on how to use the provided Kubernetes configuration files:
+
+### Prerequisites
+
+1. **Kubernetes Cluster**: Make sure you have access to a Kubernetes cluster. You can set one up on a cloud provider like AWS, GCP, Azure, or locally using tools like minikube or kind.
+
+2. **Kubectl**: Kubectl is a command line tool for controlling Kubernetes clusters. Make sure it's installed on your machine and configured to interact with your Kubernetes cluster. You can verify that kubectl is working correctly by running `kubectl version`.
+
+3. **Docker Image**: The Docker image `athenaCreate:latest` should be available in a registry accessible by the Kubernetes cluster.
+
+### Instructions
+
+The provided scripts create various resources in your Kubernetes cluster. Here's how you can use them:
+
+1. **Create Persistent Volume and Persistent Volume Claim**: To create the persistent volume and volume claim, run the command:
+
+    ```
+    kubectl apply -f athena-create-pv-and-pvc.yaml
+    ```
+
+    This will create a PersistentVolume and PersistentVolumeClaim which are used for storing data.
+
+2. **Create Deployment and Service**: To create the Deployment and Service, run the command:
+
+    ```
+    kubectl apply -f athena-create-deployment-and-service.yaml
+    ```
+
+    This will create a Deployment which manages the running of your application, and a Service which exposes your application to the network.
+
+3. **Create Horizontal Pod Autoscaler**: To create the Horizontal Pod Autoscaler, run the command:
+
+    ```
+    kubectl apply -f athena-create-hpa.yaml
+    ```
+
+    This will create a HorizontalPodAutoscaler which automatically scales the number of pods in your deployment based on CPU usage.
+
+### Managing your Kubernetes Resources
+
+You can use the `kubectl` command line tool to manage your Kubernetes resources. Here are some common commands:
+
+- `kubectl get pods`: Lists all pods in the current namespace.
+- `kubectl get svc`: Lists all services in the current namespace.
+- `kubectl get hpa`: Lists all horizontal pod autoscalers in the current namespace.
+- `kubectl get pv` and `kubectl get pvc`: Lists all persistent volumes and persistent volume claims, respectively.
+- `kubectl describe <resource>/<name>`: Provides more detail about a specific resource (like a Pod, Service, etc.)
+- `kubectl delete -f <file>`: Deletes the resources defined in a file.
+
+### Notes
+
+- In a real-world scenario, it's often better to use a namespace to isolate your application resources. This can be done by adding a `metadata.namespace` field to all resources, or by appending `-n <namespace>` to all `kubectl` commands.
+- Persistent Volumes are a complex topic, and the provided configuration might not work in all scenarios (for example, in a multi-node cluster). In such cases, consider using a StorageClass and dynamic provisioning.
+- Make sure to monitor your application to ensure that the autoscaling is working as expected.
+- The resource limits and requests, as well as the autoscaling parameters, should be adjusted based on the requirements of your application and the resources of your cluster. The provided values are just examples.
