@@ -88,7 +88,15 @@ Athena Create is not just an app — it's a vision for a future where anyone can
 
 
 
+# Roadmap
 
+* Brute force to functional prototype that takes in user input, text or multi-modal => sends to swarm => worker node uses model from HF to complete the user task
+
+* Implement Database logic
+
+* Deploy on AWS at `create.apac.ai`
+
+* Optimize for reliability and speed
 
 # Kubernetes Documentation
 
