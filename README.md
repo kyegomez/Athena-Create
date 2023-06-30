@@ -147,3 +147,206 @@ You can use the `kubectl` command line tool to manage your Kubernetes resources.
 - Persistent Volumes are a complex topic, and the provided configuration might not work in all scenarios (for example, in a multi-node cluster). In such cases, consider using a StorageClass and dynamic provisioning.
 - Make sure to monitor your application to ensure that the autoscaling is working as expected.
 - The resource limits and requests, as well as the autoscaling parameters, should be adjusted based on the requirements of your application and the resources of your cluster. The provided values are just examples.
+
+
+---------------------
+
+
+# Terraform
+
+In order to deploy the above Kubernetes resources to AWS using Terraform, you can follow the plan outlined below. Please note that deploying a Kubernetes cluster to AWS involves many steps and decisions based on your specific requirements, this is a simplified guide:
+
+**Plan**
+
+1. **Provisioning AWS infrastructure:** We'll use AWS EKS (Elastic Kubernetes Service) as it manages the Kubernetes control plane for you. For this, we'll need an EKS cluster and worker nodes.
+
+2. **Setup Kubernetes Provider:** Once the EKS cluster is created, we'll use the Kubernetes provider to manage resources inside the Kubernetes cluster (e.g., deployment, service, HPA).
+
+3. **Deploy the Kubernetes resources:** Once we have the Kubernetes provider set up, we can deploy the Kubernetes resources.
+
+Now, let's proceed to the Terraform scripts:
+
+1. **Terraform Configuration** (main.tf)
+
+```hcl
+provider "aws" {
+  region  = "us-west-2"
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+
+  name = "my-vpc"
+  cidr = "10.0.0.0/16"
+
+  azs             = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+
+  enable_nat_gateway = true
+  enable_vpn_gateway = true
+}
+
+module "eks" {
+  source          = "terraform-aws-modules/eks/aws"
+  cluster_name    = "my-eks-cluster"
+  cluster_version = "1.21"
+  subnets         = module.vpc.private_subnets
+
+  node_groups = {
+    eks_nodes = {
+      desired_capacity = 2
+      max_capacity     = 10
+      min_capacity     = 1
+
+      instance_type = "m5.large"
+      key_name      = "my-key"
+
+      additional_tags = {
+        Environment = "test"
+        Name        = "eks-worker-node"
+      }
+    }
+  }
+}
+
+data "aws_ami" "eks_worker" {
+  filter {
+    name   = "name"
+    values = ["amazon-eks-node-1.21-v*"]
+  }
+
+  most_recent = true
+  owners      = ["602401143452"] # Amazon EKS AMI account ID
+}
+
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  token                  = module.eks.cluster_token
+  load_config_file       = false
+  version                = "~> 2.3"
+}
+
+```
+
+2. **Deploying Kubernetes resources**
+
+Now that the EKS cluster is set up and the Kubernetes provider is configured, we can manage Kubernetes resources. We can define the Kubernetes resources in Terraform in a similar way to how we did with the Kubernetes YAML. 
+
+Note: For simplicity, I'll only show a partial translation of the Deployment. Translating the Service, PVC, PV, and HPA to Terraform is a similar process. Here's how you could define the Deployment in Terraform:
+
+```hcl
+resource "kubernetes_deployment" "athena_create" {
+  metadata {
+    name = "athena-create-deployment"
+    labels = {
+      app = "athena-create"
+    }
+ 
+
+ }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "athena-create"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "athena-create"
+        }
+      }
+
+      spec {
+        container {
+          image = "athenaCreate:latest"
+          name  = "athena-create-container"
+          
+          resources {
+            limits {
+              cpu    = "1"
+              memory = "1Gi"
+            }
+            requests {
+              cpu    = "0.5"
+              memory = "500Mi"
+            }
+          }
+
+          port {
+            container_port = 80
+          }
+
+          volume_mount {
+            name       = "storage-volume"
+            mount_path = "/opt/storage"
+          }
+        }
+
+        volume {
+          name = "storage-volume"
+
+          persistent_volume_claim {
+            claim_name = "athena-create-pvc"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Instructions:**
+
+1. **Install Terraform:** Make sure you have Terraform installed on your machine.
+
+2. **Configure AWS Credentials:** Make sure your AWS credentials are properly configured. You can set the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables, or use AWS profiles.
+
+3. **Terraform Initialization:** Navigate to the directory containing the Terraform scripts and run `terraform init`. This will download the necessary provider plugins.
+
+4. **Terraform Plan:** Run `terraform plan` to see what changes will be made.
+
+5. **Terraform Apply:** Run `terraform apply` to apply the changes. It will show you a plan and you will need to confirm it.
+
+**Please Note:**
+
+- The above code is a simple demonstration of how one can deploy a Kubernetes cluster using EKS and Terraform. There are many factors to consider when deploying to production, including network setup, security, IAM roles, and more.
+- Make sure to replace the placeholder values in the code with actual values suitable for your environment.
+- Managing Kubernetes resources with Terraform is a bit more complex compared to using YAML and `kubectl`. If your team is comfortable with Kubernetes and `kubectl`, consider using Terraform just to set up the EKS cluster and `kubectl` to manage the resources inside the cluster.
+
+
+-------------------------------------- 
+
+**Deployment Plan:**
+
+1. **Review and Update Infrastructure Configuration:** Review your `main.tf` script and make sure that all configurations meet your production requirements. This includes subnet configurations, EKS node group settings (instance type, min/max nodes), etc.
+
+2. **IAM Roles and Security:** Create necessary IAM roles and security groups for your EKS cluster and nodes. Make sure only necessary permissions are given.
+
+3. **Network Setup:** Make sure your VPC, subnets, routing, and NAT Gateways are correctly configured and follow best practices. If you're deploying the app in an existing network, adjust the network settings in `main.tf`.
+
+4. **Secrets Management:** Avoid hardcoding any sensitive data or secrets in your scripts. Use AWS Secrets Manager or similar services to manage your secrets.
+
+5. **Terraform Backend:** Configure a Terraform backend for storing your Terraform state. This is crucial for managing your infrastructure in a team.
+
+6. **Testing:** Test your Terraform scripts in a non-production environment first. Validate if the resources are created and configured correctly.
+
+7. **Continuous Deployment:** Set up a CI/CD pipeline for your app. When changes are pushed to your app's repository, the pipeline should build a new Docker image, push it to a registry, and update the Kubernetes Deployment.
+
+8. **Monitoring and Logging:** Set up monitoring and logging for your EKS cluster and your app. AWS CloudWatch can be used for this purpose.
+
+9. **Auto Scaling:** Test if the Kubernetes HPA is correctly configured and scaling your app based on CPU usage.
+
+10. **Disaster Recovery:** Make sure you have a disaster recovery plan in place. This includes regular backups of your app data and a plan to restore from these backups.
+
+11. **Maintenance:** Plan for regular maintenance of your EKS cluster. This includes Kubernetes version upgrades, node updates, etc.
+
+12. **Apply Changes:** Finally, use the `terraform apply` command to create your EKS cluster and deploy your app. Monitor the output and resolve any errors if they come up.
+
+This plan provides a general guide but every production environment will have its own requirements, so make sure to adapt this plan as needed.
